@@ -1,171 +1,145 @@
-import React, { useEffect, useState } from "react";
-import './App.css'
+// import React, { useEffect, useRef, useState } from "react";
+// import './App.css'
+// import Mainpage from "./components/Mainpage";
+
+// import Webcam from "react-webcam";
+// import * as faceapi from "face-api.js";
 
 
-import {
-  Chart as ChartJS,
-  LineElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
+// function App() {
+
+//   const hours = Array.from({ length: 11 }, (_, i) => i + 8);
+
+//   const today = new Date().toLocaleDateString("en-IN", {
+//     timeZone: "Asia/Kolkata"
+//   });
 
 
-import Second from './components/Secondemo'
-import First from './components/Firstemo'
-import Thirdemo from "./components/Thirdemo";
-import Fourthemo from "./components/Fourthemo";
-import Fifthemo from "./components/Fifthemo";
+
+//   const webcamRef = useRef(null);
+//   const [emotion, setEmotion] = useState("Loading Models...");
+
+//   useEffect(() => {
+//     const loadModels = async () => {
+//       const MODEL_URL = "/models";
+
+//       await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+//       await faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL);
+
+//       startDetection();
+//     };
+
+//     loadModels();
+//   }, []);
+
+//   const startDetection = () => {
+//     setInterval(async () => {
+//       if (
+//         webcamRef.current &&
+//         webcamRef.current.video.readyState === 4
+//       ) {
+//         const video = webcamRef.current.video;
+
+//         const detections = await faceapi
+//           .detectAllFaces(
+//             video,
+//             new faceapi.TinyFaceDetectorOptions()
+//           )
+//           .withFaceExpressions();
+
+//         if (detections.length > 0) {
+//           const expressions = detections[0].expressions;
+
+//           const maxEmotion = Object.keys(expressions).reduce((a, b) =>
+//             expressions[a] > expressions[b] ? a : b
+//           );
+
+//           setEmotion(maxEmotion);
+//         } else {
+//           setEmotion("No Face Detected");
+//         }
+//       }
+//     }, 1000);
+//   }
 
 
-import swal from 'sweetalert2';
+
+
+
+
+
+
+//   return (
+//     <>
+
+//       <div className="container">
+//         <table border="1" cellPadding="10" style={{ borderCollapse: "collapse" }}>
+//           <thead>
+//             <tr>
+//               <th>Slot</th>
+//               <th>Time (IST)</th>
+//               <th>Emotions</th>
+//             </tr>
+//           </thead>
+
+//           <tbody>
+//             {hours.map((hour, index) => (
+//               <tr key={index}>
+//                 <td>{index + 1}</td>
+//                 <td>
+//                   {hour.toString().padStart(2, "0")}:00 -{" "}
+//                   {(hour + 1).toString().padStart(2, "0")}:00 IST
+//                 </td>
+//                 <td><Mainpage /></td>
+//                 <td>
+//                   <div style={{ textAlign: "center", marginTop: "20px" }}>
+//                     <h1>🎭 Face Emotion Tracker</h1>
+
+//                     <Webcam
+//                       ref={webcamRef}
+//                       audio={false}
+//                       width={400}
+//                       height={300}
+//                     />
+
+//                     <h2>Detected Emotion:</h2>
+//                     <h1 style={{ color: "red" }}>{emotion}</h1>
+//                   </div>
+//                 </td>
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       </div>
+//     </>
+//   );
+// }
+
+// export default App
+
+import React, { useEffect, useRef, useState } from "react";
+import "./App.css";
+import Webcam from "react-webcam";
+import * as faceapi from "face-api.js";
+import Mainpage from './components/Mainpage.jsx'
+
 
 
 function App() {
+  
 
-  const [moods, setMoods] = useState(JSON.parse(localStorage.getItem("moods")) ||[]);
-  const [open, setOpen] = useState(false)
+  return (
+    
+    <>
 
-  useEffect(() => {
-    localStorage.setItem("moods", JSON.stringify(moods)) || [];
-  }, [moods]);
+    <div className="allcontainer">
 
-
-  const addMood = (value) => {
-    const today = new Date().toLocaleDateString();
-
-
-    const already = moods.find((m) => m.date === today);
-    if (already) {
-      swal.fire({
-        title: "Oops!",
-        text: "Today Your Emotion are Already Added",
-        icon: "error",
-        confirmButtonText: "OK"
-      });
-      return;
-    }
-    else {
-      swal.fire({
-        title: "Success!",
-        text: "Your Emotion was Added successfully",
-        icon: "success",
-        confirmButtonText: "OK"
-      });
-
-    }
-
-    const updated = [...moods, { date: today, mood: value }];
-
-
-    if (updated.length > 7) updated.shift();
-
-    setMoods(updated);
-  };
-
-
-  const chartData = {
-    labels: moods.map((m) => m.date),
-    datasets: [
-      {
-        label: "Weekly Mood",
-        data: moods.map((m) => m.mood),
-        tension: 0.4,
-        borderWidth: 2,
-      },
-    ],
-  };
-
-  const HANDLEOPEN = () => {
-    setOpen(true)
-  }
-
-
-  const analyze = () => {
-    if (moods.length === 0) return "";
-
-    const avg = moods.reduce((sum, m) => sum + m.mood, 0) / moods.length;
-    if (moods.length === 7) {
-    if (avg >= 75) return "😍 Happy Week";
-    if (avg >= 50) return "😌 Normal Week";
-    return "😡 Bad Week";
-  }
-  if(moods.length > 1){
-    if (avg >= 75) return "😍 Happy days";
-  if (avg >= 50) return "😌 Normal days";
-  return "😡 Bad days";
-  }
-  if(moods.length === 1){
-    if (avg >= 75) return "😍 Happy day";
-  if (avg >= 50) return "😌 Normal day";
-  return "😡 Bad day";
-  }
-};
-
-
-
-
-
-return (
-  <>
-    <div className="container">
-      <div className="wrapper">
-        <div className="header">
-          <h1>Emotion Tracker</h1>
-          <p>Track your daily mood & analyze your week</p>
-        </div>
-
-
-        <div className="emoji-section">
-
-          <button onClick={() => addMood(100)}><First /></button>
-          <button onClick={() => addMood(75)}><Second /></button>
-          <button onClick={() => addMood(50)}><Thirdemo /></button>
-          <button onClick={() => addMood(25)}><Fourthemo /></button>
-          <button onClick={() => addMood(0)}><Fifthemo /></button>
-
-
-
-        </div>
-        <div className="BTN">
-
-          <div className="action">
-            {/* {moods.length===7 ? <button className="view-btn" onClick={() => HANDLEOPEN()}>View Emotions</button> : ""} */}
-            <button className="view-btn" onClick={() => HANDLEOPEN()}>View Emotions</button>
-          </div>
-        </div>
-      </div>
-
-
-
-
-
-      {open && (<div className="popup-overlay">
-
-        <div className="popup-box">
-
-          <button className="close-btn" onClick={() => setOpen(false)}>X</button>
-
-          <h2>Your Last 7 Days Emotions</h2>
-
-
-
-          <div className="crt" >
-            <Line data={chartData} />
-          </div>
-
-
-          <h2>{analyze()}</h2>
-
-        </div>
-
-      </div>)}
+    <Mainpage/>
     </div>
+    
 
-  </>
-);
+    </>
+  )
 }
 
-export default App
+export default App;
