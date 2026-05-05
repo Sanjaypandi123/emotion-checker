@@ -3,6 +3,527 @@
   padding: 0;
   box-sizing: border-box;
 }
-.allcontainer{
-  background-color: #d9ebfc;
+
+
+/* patientdashhhhhhhhhhhhhhhhhhhhh */
+
+/* ===== FULL PAGE CENTER ===== */
+.patient-dashboard {
+  min-height: 100vh;
+  background: #f4f6fa;
+  display: grid;
+  place-content: center;
+
+}
+
+.dashboard-wrapper{
+  border: 1px solid red;
+  width:  800px;
+  min-height: 630px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* ===== HEADER ===== */
+header {
+  height: 70px;
+  background: #2e5da8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+header a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15px;
+  padding: 6px 14px;
+  border-radius: 4px;
+  transition: 0.2s ease;
+}
+
+header a:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* ===== CONTENT CENTER ONLY ===== */
+.dashboard-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;   /* horizontal center */
+  padding: 40px 20px;
+}
+
+/* ===== CARD ===== */
+.card {
+  width: 100%;
+  max-width: 850px;
+  background: white;
+  padding: 35px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* ===== TITLE ===== */
+.card h2 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin-bottom: 8px;
+}
+
+.date {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+/* ===== PROGRESS ===== */
+.progress {
+  margin-bottom: 25px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #eef2ff;
+  color: #3730a3;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ===== SLOT BOX ===== */
+.slot {
+  background: #f8fbff;
+  border: 1px solid #e0e7ff;
+  padding: 20px;
+  border-radius: 14px;
+  margin-top: 18px;
+  transition: 0.3s ease;
+}
+
+.slot:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  transform: translateY(-3px);
+}
+
+.slot h3 {
+  margin-bottom: 10px;
+  color: #1e3a8a;
+}
+
+/* ===== BUTTON STYLE ===== */
+button {
+  padding: 10px 22px;
+  border-radius: 30px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.3);
+}
+
+button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* ===== EMOTION RESULT ===== */
+.emotion-result {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #374151;
+}
+
+/* ===== CAMERA SECTION ===== */
+.camera-section {
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 14px;
+  background: #f1f5ff;
+}
+
+.capture-btn {
+  margin-top: 15px;
+}
+
+/* ===== MODAL OVERLAY ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* ===== MODAL BOX ===== */
+.modal-box {
+  background: white;
+  padding: 30px;
+  border-radius: 14px;
+  width: 500px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  animation: popupFade 0.25s ease;
+  position: relative;
+}
+
+.modal-box h3 {
+  margin-bottom: 20px;
+  color: #2e5da8;
+}
+
+/* ===== BUTTON SECTION ===== */
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  
+}
+
+.capture-btn {
+  background: #3f6db3;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.capture-btn:hover {
+  background: #2e5da8;
+}
+
+.close-btn {
+  background: #2e5da8;
+  position: absolute;
+  color: white;
+  border: none;
+  font-size: 2rem;
+  padding: 8px 15px;
+  border-radius: 50%;
+  top: -20px;
+  right: -25px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.close-btn:hover {
+  background: #2e5da8;
+}
+
+/* Animation */
+@keyframes popupFade {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ======================================================================================================== */
+/* admindashhhhhhhh */
+
+.admindashboard{
+    min-height: 100vh;
+    display: grid;
+    place-content: center;
+    background: #f4f6f9;
+}
+/* Full Screen Layout */
+.dashboard {
+  height: 98vh;
+  width: 99vw;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+  background: #e5ecfc;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== TOP HEADER ===== */
+.topbar {
+  height: 70px;
+  background: linear-gradient(to right, #3f6db3, #2e5da8);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* ===== MAIN CONTENT AREA ===== */
+.content {
+  flex: 1;
+  display: flex;
+  padding: 25px;
+  gap: 25px;
+  overflow: hidden;
+}
+
+/* ===== LEFT PANEL ===== */
+.left-panel {
+  width: 25%;
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+  overflow-y: auto;
+}
+
+/* Patient Overview */
+.patient-overview h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #2e5da8;
+}
+
+.patient-overview ul {
+  list-style: none;
+}
+
+.patient-overview li {
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+  background: #f1f4f9;
+}
+
+.patient-overview li:hover {
+  background: #dbe7ff;
+}
+
+.patient-overview li.active {
+  background: #3f6db3;
+  color: white;
+  font-weight: 500;
+}
+
+/* ===== RIGHT PANEL ===== */
+.right-panel {
+  width: 75%;
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+  overflow-y: auto;
+}
+
+/* Chart Card */
+.chart-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Chart Header */
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.chart-header h3 {
+  font-size: 20px;
+  color: #2e5da8;
+}
+
+.chart-header select {
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Chart Body */
+.chart-body {
+  flex: 1;
+  border-radius: 8px;
+  background: #f7f9fc;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Chart Footer */
+.chart-footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chart-footer button {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 6px;
+  background: #3f6db3;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.chart-footer button:hover {
+  background: #2e5da8;
+}
+
+
+
+/* ===== TWO COLUMN CHART LAYOUT ===== */
+.two-column {
+  display: flex;
+  gap: 30px;
+  width: 100%;
+  height: 100%;
+}
+
+/* Left & Right Column */
+.chart-left,
+.chart-right {
+  flex: 1;
+  background: #f7f9fc;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Headings */
+.chart-left h4,
+.chart-right h4 {
+  margin-bottom: 15px;
+  color: #2e5da8;
+  font-weight: 600;
+}
+
+/* admindashhh mobile view */
+
+/* ============================= */
+/* 📱 MOBILE (≤576px) */
+/* ============================= */
+@media (max-width: 576px) {
+
+  .admindashboard {
+    padding: 10px;
+  }
+
+  .dashboard {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+
+  .topbar {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    height: auto;
+    padding: 15px;
+    font-size: 18px;
+    gap: 5px;
+  }
+
+  .content {
+    flex-direction: column;
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .left-panel,
+  .right-panel {
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+  }
+
+  .patient-overview li {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .chart-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .chart-footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .chart-footer button {
+    width: 100%;
+  }
+}
+
+
+/* ============================= */
+/* 📲 TABLET (≤768px) */
+/* ============================= */
+@media (max-width: 768px) {
+
+  .dashboard {
+    width: 100%;
+    height: auto;
+  }
+
+  .content {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .left-panel,
+  .right-panel {
+    width: 100%;
+  }
+
+  .topbar {
+    padding: 0 20px;
+    font-size: 20px;
+  }
+
+  .chart-header {
+    gap: 15px;
+  }
+}
+
+
+
+
+/* ============================================================= */
+
+@media all and (max-width:576px) {
+
+  .patient-dashboard {
+    padding: 20px 0;
+  }
+  .dashboard-wrapper{
+    width: auto;
+  }
 }

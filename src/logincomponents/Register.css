@@ -1,0 +1,105 @@
+/* ===== FULL PAGE BACKGROUND ===== */
+.regiter-box {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #3f6db3, #2e5da8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* ===== FORM CONTAINER ===== */
+.form-box {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  padding: 20px 35px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== FORM TITLE ===== */
+.form-box h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #2e5da8;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+/* ===== FORM FIELD WRAPPER ===== */
+.tag {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+/* ===== LABEL ===== */
+.tag label {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* ===== INPUT & SELECT ===== */
+.tag input,
+.tag select {
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid #dcdcdc;
+  font-size: 14px;
+  transition: 0.2s ease;
+  outline: none;
+}
+
+/* Focus effect */
+.tag input:focus,
+.tag select:focus {
+  border-color: #3f6db3;
+  box-shadow: 0 0 0 2px rgba(63, 109, 179, 0.15);
+}
+
+/* ===== ERROR MESSAGE ===== */
+.tag span {
+  font-size: 12px;
+  color: red;
+  margin-top: 4px;
+}
+
+/* ===== BUTTON ===== */
+.form-box button {
+  width: 100%;
+  padding: 10px;
+  /* margin-top: 6px; */
+  border: none;
+  border-radius: 6px;
+  background: #3f6db3;
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.form-box button:hover {
+  background: #2e5da8;
+}
+
+/* ===== LOGIN LINK ===== */
+.form-box h5 {
+  text-align: center;
+  margin-top: 18px;
+  font-weight: normal;
+  font-size: 13px;
+}
+
+.form-box h5 a {
+  color: #2e5da8;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.form-box h5 a:hover {
+  text-decoration: underline;
+}
