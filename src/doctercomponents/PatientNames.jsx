@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
-const PatientNames = ({ patients,setPatients, patientchart, setPatientchart }) => {
+const PatientNames = ({ patients,setPatients, patientchart, setPatientchart,openregister,setOpenregister }) => {
 
   
-
+const user = JSON.parse(localStorage.getItem("user"));
 
 
   useEffect(() => {
@@ -13,7 +12,7 @@ const PatientNames = ({ patients,setPatients, patientchart, setPatientchart }) =
 
   const fetchPatients = async () => {
     try {
-      const res = await fetch("http://localhost:7000/patients");
+      const res = await fetch(`https://emotion-checker-backend.onrender.com/patients/${user._id}`);
 
       const data = await res.json()
       if (!res.ok) {
@@ -21,9 +20,11 @@ const PatientNames = ({ patients,setPatients, patientchart, setPatientchart }) =
         return
       }
       setPatients(data.response);
-      setPatientchart(data.response[0]._id)
+      
+      let start=(data.response[0].role=="USER")?(data.response[0]):(data.response[1])
+      setPatientchart(start._id)
 
-      console.log("RESPONSE ARRAY:", data.response);  // 🔥 add this
+      console.log("RESPONSE ARRAY:", data.response);  
 
     } catch (err) {
       console.log("Error fetching:", err);
@@ -32,7 +33,8 @@ const PatientNames = ({ patients,setPatients, patientchart, setPatientchart }) =
 
 
 
-  console.log(patientchart);
+  console.log("rerender");
+  // console.log(patientchart);
 
 
 
@@ -53,7 +55,13 @@ const PatientNames = ({ patients,setPatients, patientchart, setPatientchart }) =
               {p.patientName || p.Name}
             </li>
           ))}
+
+          <li onClick={()=>setOpenregister(true)}>Add New Patient + </li>
       </ul>
+
+      
+
+
     </div>
   );
 };

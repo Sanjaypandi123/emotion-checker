@@ -1,14 +1,15 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
 
 const Header = () => {
-  return (
-    <header>
-      <Link to="/PatientDashboard">Join</Link>
-      <Link to="/PatientDashboard/main">Dash</Link>
-      <Link to="/PatientDashboard/chart">Chart</Link>
-    </header>
-  )
-}
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const patientname = storedUser?.patientName;
 
-export default Header
+  return (
+    <header className="dashboard-header">
+      <h2>Patient Emotion Dashboard</h2>
+      <h3>{patientname}</h3>
+    </header>
+  );
+};
+
+export default Header;

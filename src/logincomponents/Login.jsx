@@ -1,136 +1,173 @@
-import React, { useRef } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
-
-import Swal from 'sweetalert2';
+import React, { useRef, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 const Login = () => {
-    const Formref = useRef("")
 
+    const Formref = useRef(null)
 
     const nav = useNavigate()
 
-     function mainpage(user){
-        debugger
+    const [errors, setErrors] = useState({})
 
-        if(user.role==="USER") nav('/PatientDashboard')
-         if(user.role==="ADMIN") nav('/AdminDashboard')
+    function mainpage(user) {
 
-     }
+        if (user.role === "USER") nav('/PatientDashboard')
 
+        if (user.role === "ADMIN") nav('/AdminDashboard')
+    }
 
+    const HandelSubmit = async (e) => {
 
-
-
-    // const HandelSubmit = (e) => {
-    //     e.preventDefault()
-
-
-    //     let obj = logininfo?.find(e => e.UEMAIL == Formref.current.email.value)
-
-
-    //     if (obj) {
-    //         if ((obj.PASS == Formref.current.pass.value) && (obj.ROLE == Formref.current.role.value)) {
-
-    //             Swal.fire({
-    //                 title: 'Success!',
-    //                 text: 'Your action was successful!',
-    //                 icon: 'success',
-    //                 confirmButtonText: 'OK'
-    //             });
-
-    //             setTimeout(() => {
-    //                 mainpage(obj)
-    //             }, 2000);
-    //         }
-    //     }
-    // }
-
-    const HandelSubmit = async(e) => {
         e.preventDefault()
+
         const email = Formref.current.email.value
         const role = Formref.current.role.value
         const password = Formref.current.password.value
-       
-        
+
+        let newErrors = {}
+
+        // Email Validation
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            newErrors.email = "Enter valid email"
+        }
+
+        // Role Validation
+        if (role === "") {
+            newErrors.role = "Please select role"
+        }
+
+        // Password Validation
+        if (password.length < 6) {
+            newErrors.password = "Password must be at least 6 characters"
+        }
+
+        // Stop submit if errors exist
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors)
+            return
+        }
+
+        // Clear previous errors
+        setErrors({})
+
         try {
-            const res = await fetch("http://localhost:7000/login", {
+
+            const res = await fetch("https://emotion-checker-backend.onrender.com/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ email, password, role })
-                
             })
-            const data=await res.json()
+
+            const data = await res.json()
+
             if (!res.ok) {
-                alert(data.message)
-                 return;
+
+                // Backend error message
+                setErrors({
+                    api: data.message
+                })
+
+                return
             }
 
-            // if(data.response.password!=password){
-            //     alert("Password mismatch")
-            //     return
-            // }
-            
-                localStorage.setItem("user",JSON.stringify(data.response))
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Login successful!',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                });
+            localStorage.setItem("user", JSON.stringify(data.response))
 
-                setTimeout(() => {
-                    mainpage(data.response)
-                }, 2000);
+            Swal.fire({
+                title: 'Success!',
+                text: 'Login successful!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            })
 
+            setTimeout(() => {
+                mainpage(data.response)
+            }, 2000)
 
-            
         }
-        catch(err){
-            alert(err.message)
+
+        catch (err) {
+
+            setErrors({
+                api: err.message
+            })
         }
     }
+
     return (
         <>
 
             <div className="regiter-box">
+
                 <div className="form-box">
-                    <form ref={Formref} onSubmit={(e) => HandelSubmit(e)}>
+
+                    <form ref={Formref} onSubmit={HandelSubmit}>
 
                         <h1>LOGIN</h1>
 
+
+
                         <div className="tag">
+
                             <label htmlFor="umail">E-Mail</label>
-                            <input type="email"
+
+                            <input
+                                type="email"
                                 id='umail'
                                 name='email'
                                 placeholder='Enter Your Email'
-                                required
                             />
+
+                            <span className='error'>{errors.email}</span>
+
                         </div>
+
                         <div className="tag">
-                            <label htmlFor="">Role</label>
-                            <select name="role" id="" required>
+
+                            <label>Role</label>
+
+                            <select name="role">
+
                                 <option value="">Select the Role</option>
-                                <option value="ADMIN">ADMIN</option>
-                                <option value="USER">USER</option>
+
+                                <option value="ADMIN">DOCTOR</option>
+
+                                <option value="USER">PATIENT</option>
+
                             </select>
+
+                            <span className='error'>{errors.role}</span>
+
                         </div>
+
                         <div className="tag">
+
                             <label htmlFor="upass">Password</label>
-                            <input type="password"
+
+                            <input
+                                type="password"
                                 id='upass'
                                 name='password'
                                 placeholder='Enter Your Password'
-                                required
                             />
+
+                            <span className='error'>{errors.password}</span>
+                            <span className='error'>{errors.api}</span>
+
                         </div>
+
                         <button type='submit'>Login</button>
 
-                        <h5>New User Go <Link to='/Register'>register</Link></h5>
+                        <h5>
+                            New User Go <Link to='/Register'>register</Link>
+                        </h5>
+
                     </form>
+
                 </div>
+
             </div>
 
         </>

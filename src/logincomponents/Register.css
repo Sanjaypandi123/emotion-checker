@@ -1,7 +1,7 @@
 /* ===== FULL PAGE BACKGROUND ===== */
 .regiter-box {
   min-height: 100vh;
-  background: linear-gradient(135deg, #3f6db3, #2e5da8);
+  background: linear-gradient(135deg, #3f6db3e2, #2e5da8e2);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -102,4 +102,11 @@
 
 .form-box h5 a:hover {
   text-decoration: underline;
+}
+
+.error{
+    color: red;
+    font-size: 13px;
+    display: block;
+    margin-top: 4px;
 }

@@ -15,12 +15,14 @@ import {
 
 const PatientCharts = ({ patientchart }) => {
   const [pDet, setpDet] = useState([]);
+  const [filter, setFilter] = useState("today"); // default
 
   const fetchPatientsEmotions = async () => {
     try {
       let res = await fetch(
-        `http://localhost:7000/emotions/${patientchart}`
+        `https://emotion-checker-backend.onrender.com/emotions/${filter}/${patientchart}`
       );
+
       let data = await res.json();
 
       if (!res.ok) {
@@ -36,11 +38,11 @@ const PatientCharts = ({ patientchart }) => {
 
   useEffect(() => {
     if (patientchart) fetchPatientsEmotions();
-  }, [patientchart]);
+  }, [patientchart, filter]);
 
-  /* =========================
-     📊 PIE CHART DATA
-  ========================= */
+  console.log("pd", pDet);
+
+  /* ===== PIE CHART DATA ===== */
 
   const emotionSummary = [];
 
@@ -59,12 +61,10 @@ const PatientCharts = ({ patientchart }) => {
     }
   });
 
-  /* =========================
-     📈 LINE CHART DATA
-  ========================= */
+  /* ===== LINE CHART DATA ===== */
 
   const lineData = pDet.map((item) => ({
-    time: item.time,
+    time: new Date(item.createdAt).toLocaleDateString(),
     percentage: item.percentage,
   }));
 
@@ -80,11 +80,17 @@ const PatientCharts = ({ patientchart }) => {
     <div className="chart-card">
       <div className="chart-header">
         <h3>Mood Tracking Chart</h3>
-        <select>
-          <option>2022-12-15</option>
+
+        {/* 🔽 FILTER DROPDOWN */}
+        <select
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value="today">Today</option>
+          <option value="last7days">Last 7 Days</option>
+          <option value="last30days">Last 30 Days</option>
         </select>
       </div>
-
 
       <div className="chart-body two-column">
 
@@ -132,11 +138,11 @@ const PatientCharts = ({ patientchart }) => {
             </LineChart>
           </ResponsiveContainer>
         </div>
-
       </div>
+
       <div className="chart-footer">
-        <button>Previous Day</button>
-        <button>Next Day</button>
+        <button>Previous</button>
+        <button>Next</button>
       </div>
     </div>
   );
