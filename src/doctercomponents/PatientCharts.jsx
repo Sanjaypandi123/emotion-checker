@@ -140,10 +140,7 @@ const PatientCharts = ({ patientchart }) => {
         </div>
       </div>
 
-      <div className="chart-footer">
-        <button>Previous</button>
-        <button>Next</button>
-      </div>
+      
     </div>
   );
 };

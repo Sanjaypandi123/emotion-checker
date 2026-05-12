@@ -12,11 +12,11 @@ export const Patient = () => {
         <Header />
 
         <div className="dashboard-body">
-          <div className="left-panel">
+          <div className="left-mainpage">
             <Mainpage />
           </div>
 
-          <div className="right-panel">
+          <div className="right-charts">
             <Chartss />
           </div>
         </div>

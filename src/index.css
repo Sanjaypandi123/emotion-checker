@@ -4,31 +4,38 @@
   box-sizing: border-box;
 }
 
-/* ===== PAGE BACKGROUND ===== */
+
+/* ========================= */
+/* ===== PATIENT DASHBOARD ===== */
+/* ========================= */
+
 .patient-dashboard {
   width: 100%;
   min-height: 100vh;
-  background: #e9edf5;
+  background: #f4f6fa;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 30px;
 }
 
-/* ===== WRAPPER ===== */
 .dashboard-wrapper {
-  width: 95%;
+  width: 100%;
   max-width: 1400px;
-  background: #f8f9fc;
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  min-height: 90vh;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ===== HEADER ===== */
+
 .dashboard-header {
   height: 75px;
-  background: linear-gradient(90deg, #355fa6, #2e4f8f);
+  background: linear-gradient(90deg, #3f6db3, #2e5da8);
   color: white;
   display: flex;
   justify-content: space-between;
@@ -37,8 +44,7 @@
 }
 
 .dashboard-header h2 {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 22px;
 }
 
 .dashboard-header h3 {
@@ -46,109 +52,131 @@
 }
 
 /* ===== BODY ===== */
+
 .dashboard-body {
+  flex: 1;
   display: flex;
   gap: 25px;
   padding: 30px;
 }
 
-/* ===== LEFT & RIGHT PANELS ===== */
-.left-panel {
-  flex: 1;
+/* ========================= */
+/* ===== LEFT MAINPAGE ===== */
+/* ========================= */
+
+.left-mainpage {
+  width: 450px;        /* fixed width like image */
+  min-width: 450px;
+  max-width: 450px;
+  background: #eef2fb;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: inset 0 0 0 1px rgba(63,109,179,0.08);
+  display: flex;
+  flex-shrink: 0; 
+}
+.right-charts {
+  flex: 1;           /* only remaining space */
+  min-width: 0;      /* IMPORTANT — prevents overflow */
 }
 
-.right-panel {
-  flex: 1.2;
-}
-
-/* ===== CARD STYLE ===== */
-.card {
-  background: white;
+/* Main Card Inside Left */
+.left-mainpage .card {
+  width: 100%;
+  background: #f8faff;
   padding: 30px;
-  border-radius: 14px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
 }
 
-/* ===== DATE STYLE ===== */
-.date {
-  color: #6b7280;
+/* Date Styling */
+.card .date {
+  text-align: right;
   font-size: 14px;
+  color: #5a6c8f;
   margin-bottom: 20px;
+  font-weight: 500;
 }
 
-/* ===== SLOT CARD ===== */
+/* Each Slot Box */
 .slot {
-  background: #f4f6fb;
-  padding: 18px;
+  background: white;
+  padding: 20px;
   border-radius: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #e3e8f5;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: 0.3s ease;
 }
 
-.slot:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-}
-
+/* Slot Title */
 .slot h3 {
-  color: #355fa6;
+  font-size: 16px;
+  color: #2e5da8;
+  letter-spacing: 0.5px;
 }
 
-/* ===== BUTTON ===== */
-button {
-  padding: 8px 20px;
-  border-radius: 8px;
-  border: none;
-  background: #355fa6;
-  color: white;
-  cursor: pointer;
+/* Button inside slot */
+.slot button {
+  padding: 8px 18px;
   font-size: 14px;
-  transition: 0.3s ease;
+  border-radius: 6px;
 }
 
-button:hover {
-  background: #2e4f8f;
-}
-
-button:disabled {
-  background: #b5bccb;
+/* Disabled state */
+.slot button:disabled {
+  background: #c8d2e8;
   cursor: not-allowed;
 }
 
-/* ===== MODAL ===== */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+
+
+/* ========================= */
+/* ===== BUTTON ===== */
+/* ========================= */
+
+button {
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: none;
+  background: #3f6db3;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.modal-box {
-  background: white;
-  padding: 30px;
-  border-radius: 14px;
-  width: 500px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  z-index: 999;
+button:hover {
+  background: #2e5da8;
 }
 
-.modal-box h3 {
-  margin-bottom: 20px;
-  color: #355fa6;
+/* ========================= */
+/* ===== RESPONSIVE ===== */
+/* ========================= */
+
+@media (max-width: 992px) {
+  .dashboard-body {
+    flex-direction: column;
+  }
+
+  .left-mainpage,
+  .right-charts {
+    width: 100%;
+  }
 }
 
-.modal-buttons {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  gap: 15px;
+@media (max-width: 576px) {
+  .patient-dashboard {
+    padding: 15px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    height: auto;
+    padding: 15px;
+    text-align: center;
+  }
 }
 /* ======================================================================================================== */
 /* admindashhhhhhhh */
@@ -443,25 +471,134 @@ button:disabled {
 
 
 
+/* ========================= */
+/* ===== addingpatient-popup ===== */
+/* ========================= */
 
-/* adding popup */
-
-.addingpatient-popup{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  /* border: 1px solid red; */
+.addingpatient-popup {
+  position: absolute;  
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;      
+  /* background: white; */
   display: flex;
   align-items: center;
   justify-content: center;
-
+  /* z-index: 9999; */
 }
 
-.addingpatient-popup .closebtn{
+
+/* Close Button */
+.addingpatient-popup .closebtn {
   position: absolute;
-  top: 2%;
-  right: 2%;
+  top: 25px;
+  right: 0;
+  background: #ff4d4d;
+  border: none;
+  color: white;
+  padding: 12px 15px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
+.addingpatient-popup .closebtn:hover {
+  background: #d93636;
+}
+
+/* Buttons inside popup */
+.popup-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* Animation */
+@keyframes popupScale {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+
+
+
+
+
+
+/* ========================= */
+/* ===== CAMERA POPUP ===== */
+/* ========================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* Popup Box */
+.modal-overlay .popup-box {
+  width: 650px;
+  max-width: 95%;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 30px;
+  position: relative;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+  animation: popupScale 0.25s ease;
+}
+
+/* Close Button */
+.modal-overlay .closebtn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #ff4d4d;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.modal-overlay .closebtn:hover {
+  background: #d93636;
+}
+
+/* Camera Container */
+.camera-container {
+  width: 100%;
+  height: 380px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: black;
+  margin: 20px 0;
+}
+
+/* Buttons */
+.modal-overlay .modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* Animation */
+@keyframes popupScale {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
