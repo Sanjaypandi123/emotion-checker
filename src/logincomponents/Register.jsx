@@ -27,8 +27,8 @@ const Register = () => {
         }
 
         // Phone Validation
-        if (!/^[0-9]{10}$/.test(unum.value)) {
-            newErrors.unum = "Phone number must be 10 digits"
+        if (!/^[6-9]\d{9}$/.test(unum.value)) {
+            newErrors.unum = "Enter a valid phone number"
         }
 
         // Email Validation
