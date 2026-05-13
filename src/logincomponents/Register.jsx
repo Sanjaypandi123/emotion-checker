@@ -43,7 +43,7 @@ const Register = () => {
 
         // Confirm Password Validation
         if (upass.value !== ucpass.value) {
-            newErrors.ucpass = "Passwords do not match"
+            newErrors.ucpass = "Passwords mismatch"
         }
 
         // Role Validation
@@ -98,8 +98,9 @@ const Register = () => {
             }, 2000)
 
         } catch (err) {
-            console.log("Error:", err)
-            alert("Error: " + err.message)
+            setErrors({
+                api: err.message
+            })
         }
     }
 
@@ -188,9 +189,9 @@ const Register = () => {
 
                             <span className='error'>{errors.ucpass}</span>
                         </div>
-                        <span className='error'>{errors.api}</span>
 
                         <button type='submit'>Register</button>
+                        <span className='error'>{errors.api}</span>
 
                         <h5>
                             Already registered user go <Link to='/'>Login</Link>

@@ -216,9 +216,9 @@ const DocterMain = () => {
 
                     </div> */}
                     {/* API Error */}
-                    {errors.api && <span className="error">{errors.api}</span>}
 
                     <button type='submit'>Register</button>
+                    {errors.api && <span className="error">{errors.api}</span>}
 
                   </form>
                 </div>

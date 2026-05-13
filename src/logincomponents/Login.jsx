@@ -157,9 +157,9 @@ const Login = () => {
                             
 
                         </div>
-                        <span className='error'>{errors.api}</span>
 
                         <button type='submit'>Login</button>
+                        <span className='error'>{errors.api}</span>
 
                         <h5>
                             New User Go <Link to='/Register'>register</Link>
