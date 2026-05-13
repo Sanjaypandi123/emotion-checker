@@ -8,7 +8,7 @@ const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     fetchPatients();
-  }, []);
+  }, [openregister]);
 
   const fetchPatients = async () => {
     try {

@@ -154,9 +154,10 @@ const Login = () => {
                             />
 
                             <span className='error'>{errors.password}</span>
-                            <span className='error'>{errors.api}</span>
+                            
 
                         </div>
+                        <span className='error'>{errors.api}</span>
 
                         <button type='submit'>Login</button>
 

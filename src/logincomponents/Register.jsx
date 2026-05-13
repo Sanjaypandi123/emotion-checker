@@ -188,6 +188,7 @@ const Register = () => {
 
                             <span className='error'>{errors.ucpass}</span>
                         </div>
+                        <span className='error'>{errors.api}</span>
 
                         <button type='submit'>Register</button>
 

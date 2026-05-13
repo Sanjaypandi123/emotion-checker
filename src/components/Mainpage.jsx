@@ -50,8 +50,8 @@ const Mainpage = () => {
       return "completed";
 
     if (slot === "morning") {
-      if (hour < 8) return "notStarted";
-      if (hour >= 8 && hour < 12) return "active";
+      if (hour < 7) return "notStarted";
+      if (hour >= 7 && hour < 12) return "active";
       return "passed";
     }
 

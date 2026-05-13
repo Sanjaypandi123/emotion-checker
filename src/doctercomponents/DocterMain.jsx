@@ -9,35 +9,64 @@ const DocterMain = () => {
   const [patients, setPatients] = useState([]);
   const [patientchart, setPatientchart] = useState(null)
   const [loggedUser, setLoggedUser] = useState(null);
-
   const [openregister, setOpenregister] = useState(false)
+  const [errors, setErrors] = useState({});
 
   const formref = useRef(null)
-
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     setLoggedUser(user);
   }, []);
 
-  console.log("Logged user:", loggedUser);
-
-
   const HandelSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    if (!formref.current) {
-      alert("Form not ready")
-      return
+    if (!formref.current) return;
+
+    const { uname, umail, unum, upass, ucpass, role } = formref.current;
+
+    let newErrors = {};
+
+    // Name validation
+    if (!uname.value.trim()) {
+      newErrors.uname = "Name is required";
     }
 
-    try {
-      const { uname, umail, unum, upass, ucpass, role } = formref.current
+    // Phone validation (10 digits)
+    if (!/^[0-9]{10}$/.test(unum.value)) {
+      newErrors.unum = "Phone number must be 10 digits";
+    }
 
-      if (upass.value !== ucpass.value) {
-        alert("Passwords do not match ")
-        return
-      }
+    // Email validation
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(umail.value)) {
+      newErrors.umail = "Invalid email format";
+    }
+
+    // Password validation
+    if (upass.value.length < 6) {
+      newErrors.upass = "Password must be at least 6 characters";
+    }
+
+    // Confirm password validation
+    // if (upass.value !== ucpass.value) {
+    //   newErrors.ucpass = "Passwords do not match";
+    // }
+
+    // Role validation
+    if (!role.value) {
+      newErrors.role = "Please select role";
+    }
+
+    // If errors exist stop submit
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    setErrors({}); // clear previous errors
+
+    try {
 
       let patientObj = {
         patientName: uname.value,
@@ -45,7 +74,7 @@ const DocterMain = () => {
         mobile: unum.value,
         password: upass.value,
         role: role.value,
-        docterID:loggedUser._id
+        docterID: loggedUser?._id
       }
 
       const res = await fetch("https://emotion-checker-backend.onrender.com/patient", {
@@ -54,12 +83,12 @@ const DocterMain = () => {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(patientObj)
-      })
+      });
 
-      const data = await res.json()
+      const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message)
+        throw new Error(data.message || "Something went wrong");
       }
 
       Swal.fire({
@@ -68,18 +97,17 @@ const DocterMain = () => {
         icon: 'success',
         confirmButtonText: 'OK'
       });
-      formref.current.reset()
-      setOpenregister(false)
+
+      formref.current.reset();
+      setOpenregister(false);
 
     } catch (err) {
-      console.log("Error:", err)
-      alert("Error: " + err.message)
+      setErrors({ api: err.message });
     }
   }
 
   return (
     <>
-
       <div className="dashboard">
 
         {/* Top Header */}
@@ -102,82 +130,100 @@ const DocterMain = () => {
               setPatientchart={setPatientchart}
               openregister={openregister}
               setOpenregister={setOpenregister}
-
             />
 
-            {
-              (openregister) && (<div className="addingpatient-popup">
-                <button className='closebtn' onClick={() => setOpenregister(false)}>X</button>
-                {/* <div className="regiter-box docteradding"> */}
-                  <div className="form-box">
-                    <form ref={formref} onSubmit={(e) => HandelSubmit(e)}>
-                      <h1>REGISTER</h1>
-                      <div className="tag">
-                        <label htmlFor="uname">Name</label>
-                        <input type="text"
-                          id='uname'
-                          name='uname'
-                          placeholder='Enter Your Name'
-                          required
-                        />
-                      </div>
+            {openregister && (
+              <div className="addingpatient-popup">
+                <button
+                  className='closebtn'
+                  onClick={() => {
+                    setOpenregister(false);
+                    setErrors({});
+                  }}
+                >
+                  X
+                </button>
 
-                      <div className="tag">
-                        <label htmlFor="unum">Phone No</label>
-                        <input type="text"
-                          id='unum'
-                          name='unum'
-                          placeholder='Enter Your Phone Number'
-                          required
-                        />
-                      </div>
+                <div className="form-box">
+                  <form ref={formref} onSubmit={HandelSubmit}>
+                    <h1>REGISTER</h1>
 
-                      <div className="tag">
-                        <label htmlFor="">Role</label>
-                        <select name="role" id="" required>
-                          <option value="">Select the Role</option>
-                          {/* <option value="ADMIN">DOCTER</option> */}
-                          <option value="USER">PATIENT</option>
-                        </select>
-                      </div>
+                    
 
-                      <div className="tag">
-                        <label htmlFor="umail">E-Mail</label>
-                        <input type="text"
-                          id='umail'
-                          name='umail'
-                          placeholder='Enter Your Email'
-                          required
-                        />
-                      </div>
+                    {/* Name */}
+                    <div className="tag">
+                      <label>Name</label>
+                      <input
+                        type="text"
+                        name="uname"
+                        placeholder="Enter Your Name"
+                      />
+                      {errors.uname && <span className="error">{errors.uname}</span>}
+                    </div>
 
-                      <div className="tag">
-                        <label htmlFor="upass">Password</label>
-                        <input type="text"
-                          id='upass'
-                          name='upass'
-                          placeholder='Enter Your Password'
-                          required
-                        />
-                      </div>
+                    {/* Phone */}
+                    <div className="tag">
+                      <label>Phone No</label>
+                      <input
+                        type="text"
+                        name="unum"
+                        placeholder="Enter Your Phone Number"
+                      />
+                      {errors.unum && <span className="error">{errors.unum}</span>}
+                    </div>
 
-                      <div className="tag">
-                        <label htmlFor="ucpass">Confirm Password</label>
-                        <input type="text"
-                          id='ucpass'
-                          name='ucpass'
-                          placeholder='Re Enter Your Password'
-                          required
-                        />
-                      </div>
+                    {/* Role */}
+                    <div className="tag">
+                      <label>Role</label>
+                      <select name="role">
+                        <option value="">Select the Role</option>
+                        <option value="USER">PATIENT</option>
+                      </select>
+                      {errors.role && <span className="error">{errors.role}</span>}
+                    </div>
 
-                      <button type='submit'>Register</button>
-                      
-                    </form>
-                  </div>
-                {/* </div> */}
-              </div>)
-            }
+                    {/* Email */}
+                    <div className="tag">
+                      <label>Email</label>
+                      <input
+                        type="text"
+                        name="umail"
+                        placeholder="Enter Your Email"
+                      />
+                      {errors.umail && <span className="error">{errors.umail}</span>}
+                    </div>
+
+                    {/* Password */}
+                    <div className="tag">
+                      <label>Password</label>
+                      <input
+                        type="password"
+                        name="upass"
+                        placeholder="Enter Your Password"
+                      />
+                      {errors.upass && <span className="error">{errors.upass}</span>}
+                    </div>
+
+                    {/* Confirm Password */}
+                    {/* <div className="tag">
+                      <label>Confirm Password</label>
+                      <input
+                        type="password"
+                        name="ucpass"
+                        placeholder="Re Enter Your Password"
+                      />
+                      {errors.ucpass && <span className="error">{errors.ucpass}</span>}
+
+                    </div> */}
+                    {/* API Error */}
+                    {errors.api && <span className="error">{errors.api}</span>}
+
+                    <button type='submit'>Register</button>
+
+                  </form>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Right Panel */}
@@ -192,12 +238,8 @@ const DocterMain = () => {
             )}
           </div>
 
-
-
         </div>
-
       </div>
-
     </>
   )
 }
